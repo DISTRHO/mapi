@@ -47,7 +47,7 @@ void mapi_process(mapi_handle_t handle,
    Set an effect parameter.
    @param handle A previously created effect.
    @param index A known index for this effect.
-   @param value A normalized value between 0 and 1, scaled internally by the effect as necessary.
+   @param value A full-ranged value.
 */
 MAPI_EXPORT
 void mapi_set_parameter(mapi_handle_t handle, unsigned int index, float value);
