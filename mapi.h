@@ -1,4 +1,4 @@
-// Copyright 2025 Filipe Coelho <falktx@falktx.com>
+// Copyright 2025-2026 Filipe Coelho <falktx@falktx.com>
 // SPDX-License-Identifier: ISC
 
 #pragma once
@@ -23,10 +23,11 @@ typedef void* mapi_handle_t;
 /**
    Create an effect.
    @param sample_rate Sample rate in Hz to use for the effect.
+   @param buffer_size Nominal/expected audio buffer size, can be smaller.
    @return A handle for the new effect, or NULL if creation failed.
 */
 MAPI_EXPORT
-mapi_handle_t mapi_create(unsigned int sample_rate);
+mapi_handle_t mapi_create(unsigned int sample_rate, unsigned int buffer_size);
 
 /**
    Process an effect.
@@ -46,29 +47,29 @@ void mapi_process(mapi_handle_t handle,
 /**
    Get an effect parameter.
    @param handle A previously created effect.
-   @param index A known index for this effect.
+   @param symbol A known parameter symbol for this effect, must not be NULL or empty.
    @return value A full-ranged value.
 */
 MAPI_EXPORT
-float mapi_get_parameter(mapi_handle_t handle, unsigned int index);
+float mapi_get_parameter(mapi_handle_t handle, const char* symbol);
 
 /**
    Set an effect parameter.
    @param handle A previously created effect.
-   @param index A known index for this effect.
+   @param symbol A known parameter symbol for this effect, must not be NULL or empty.
    @param value A full-ranged value.
 */
 MAPI_EXPORT
-void mapi_set_parameter(mapi_handle_t handle, unsigned int index, float value);
+void mapi_set_parameter(mapi_handle_t handle, const char* symbol, float value);
 
 /**
    Set an effect state, using strings for both key and value.
    @param handle A previously created effect.
    @param key A known key for this effect, must not be NULL or empty.
-   @param value A non-NULL value, allowed to be empty.
+   @param value A non-NULL value.
 */
 MAPI_EXPORT
-void mapi_set_state(mapi_handle_t handle, const char* key, const char* value);
+void mapi_set_state(mapi_handle_t handle, const char* key, const void* value);
 
 /**
    Destroy a previously created effect.
